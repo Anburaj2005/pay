@@ -1,0 +1,243 @@
+
+
+
+https://www.adjust.com/blog/dive-into-deeplinking/
+
+https://medium.com/@ageitgey/everything-you-need-to-know-about-implementing-ios-and-android-mobile-deep-linking-f4348b265b49#.evsxzudwj
+
+
+window.location.replace("yourapp://path/"); setTimeout(function () {
+
+
+
+window.location.replace("https://itunes.apple.com/app/id12345678");
+ }, 2000);
+
+
+
+
+
+
+
+
+
+Adjust
+Product
+Company
+Resources
+Pricing
+Support
+Log In
+Request a demo
+Blog
+Blog
+Product Updates
+Blog
+Dive into mobile app deep linking
+
+Tech
+Deep Linking
+Mobile Marketing
+Dive into mobile app deep linking
+
+Zhiyi Huang, Backend Developer, Feb 21, 2020.
+Share:
+Want to get the latest from Adjust?
+Subscribe to our newsletter below to receive updates from us as they happen
+
+
+Mobile app deep linking is a technology that launches an app and opens a specific page once a user clicks a URL on a web page or in another app. Implementing deep links is a sure way to optimize user experience and increase your conversion rates. With this in mind, here’s how to create a deep link and other useful insights related to the topic.
+
+Why do you need deep linking?
+Let’s assume you’ve published a music app. To celebrate the release of a new song, you’ve paid tons of money to run a campaign on a popular website. In your campaign, you feature a brief sample of the song – and you probably want the user to listen to the sample inside of your app rather than on your website, where they would only see the album cover.
+
+In another example, let’s say you want to regain inactive users through a sales campaign. In this campaign, users would be directed to the sale products page in your app with a single click, without having to search for it or manually type a coupon code. Both of these examples are where deep links come into play: deep linking makes these campaigns possible.
+
+Mobile app deep linking brings seamless user experience and can increase your conversion rate and retention rate significantly. If you’d like to learn more about this, take a look at our blog post discussing the effects of deep linking in campaigns.
+
+Why do deep links exist?
+As we’ve covered, deep linking makes moving through any kind of journey between web and apps much easier for users. It also gives advertisers a much better chance of converting those users too.
+
+For an example, let's say that we want to run a campaign promoting Christmas gifts to get shoppers on to your e-commerce app. In your campaign, you feature “Christmas gifts” as a category, previewing your stock, but you would like shoppers to view the items on your app as opposed to your website. This is where deep linking comes into play. If the user has the app installed when they click the link the app will open and (in certain cases) will show the product straight away.
+
+Retaining users is a key focus of deep linking. Using deep links keeps users locked into your app. It also has great utility for re-engaging users, and is often a key component of retargeting campaigns. Ultimately, deep linking provides a versatile method of directing users through your ecosystem, creating a better user experience which can increase your sales, conversions and retention rates.
+
+Two types of deep links
+There are two kinds of links: default and deferred deep links.
+
+Default
+Default deep links only direct users to an app if it’s already installed. If the app is not installed, the link can’t reach the endpoint of an app then an error message is displayed.
+
+Default deep links are useful for retargeting campaigns where an app marketer is solely interested in finding users who have the app installed, and want them to return.
+
+Deferred
+Deferred deep links are more complex than default deep links. They can direct users to the App or Play Store if the user does not have the app installed (or to another location, such as the app’s website for more information), and then open the original page that user was directed to.
+
+So, for example, if a user downloads an e-commerce app after clicking an ad for a pair of shoes, but doesn’t have the app installed, they will first be routed to the store for download. When they open the app after install, the product page would be shown.
+
+Deferred deep links are only made possible through a deep linking solution like Adjust’s. They’re created via an SDK integration, and more information on this, click here for Android and here for iOS.
+
+Contextual deep linking?
+You may have heard the term contextual deep linking. These refer to links that ostensibly provide additional benefit, in the form of being able to store more information allowing marketers to do more with their content.
+
+Contextual deep links are default or deferred deep links with added parameters marketers can add themselves. Such links don’t exist by themselves.
+
+How to create a deep link
+Let’s start with the basics: generating a deeplink. The usual process can be full of pain points and unnecessary back-and-forths between developers and marketers as links must be implemented within the app to point users to their desired destinations.
+
+Additionally, manual deeplink creation can become a huge time sink. It can also increase the chance of human error creeping in. Like any URL — a deeplink doesn’t work if there’s a typo in it, and even the best engineer is prone to occasional typos. Having a solution to automatically create deeplinks can free up time and resources needed that can otherwise be spent on the actual optimization of campaigns and strategy.
+
+Ultimately, you’ll want to look for a tool that is easy to use and automates the link generating process to increase reliability and minimize human-error. Learn more about Adjust’s Deeplink Generator, a tool that provides marketers with a fully-formed deep link URL that works for both App Links (Android) and Universal Links (iOS), greatly reducing the hassle of implementing deep links yourself.
+
+Both scheme-based deep linking (for Android and iOS) and iOS 9+ Universal Link are fully documented, and the basic ideas are quite similar: associate a URL (for scheme-based, youapp://; for universal links, https://yourdomain.com/) with your app. When the URL is clicked, the system will open the app if it’s installed.
+
+But the world isn’t perfect. You’re probably wondering what happens if someone clicks on a deep link URL but doesn’t have my app installed. Unfortunately, they’ll either see an error message or nothing will happen. While there's no direct way to check whether or not an app is present on a device from web, there are few ways to "poll" your app when it exists and send customers to the App Store, to your website, or any other location when it doesn't.
+
+As already stated, scheme-based mobile app deep linking for Android and iOS and iOS 9+ Universal Link are fully documented - so let’s take a look at examples of how they work.
+
+Deep Link implementation for Android
+As an Android deep linking example, let’s assume your deep link URL is yourapp://path/, and your App’s bundle ID is com.yourapp.example.
+
+JavaScript solution
+A common and old technique to solve this problem is using iframe to load the deep link URL and having a delayed JavaScript to redirect to store:
+
+By doing this, the browser will try to load yourapp://path/ first.
+
+If your app is installed, then it will be opened and the following JavaScript won’t run.
+If your app is not installed, then nothing will happen while loading yourapp://path/. After 2 seconds, the page will be redirected by the JavaScript to to the Play Store, and the user can install the app from there.
+The above code has a little problem, though – after the app is opened and the user switches back to their browser, the JavaScript may continue and redirect them back to the Play Store. So we can do some optimization by checking the time a user switches back to their browser in order to determine whether they need to be redirected to the store or not:
+
+Intent solution
+Since Chrome for Android version 25 and later, the above code stopped working according to Chrome documentation. Fortunately, Google provides the Intent URL for a better solution. When a user clicks on the URL intent://path/#Intent;scheme=yourapp;package=com.yourapp.example;end, then
+
+if the app is installed, it will be opened by Chrome.
+if the app is not installed, Chrome will open Play Store.
+Which deep link solution should I use?
+The Intent solution is highly recommended because it’s much simpler to implement and the user experience is more seamless. However, it requires browser support, and the Android system is unfortunately so fragmented that there are still plenty old OSes and browsers out there. Moreover, the Android WebView used by tons of apps don’t support Intent URLs by default. The following table shows which solution you should use for mainstream Android browsers:
+
+Browser	JavaScript	Intent
+Chrome 24 or below	√	
+Chrome 25 or above		√
+Firefox		√
+Android Browser	√	
+Facebook in-app Browser		√
+Twitter in-app Browser	√	
+Other Browsers	√	
+Deep link implementation for iOS
+
+Assuming your deep link URL is yourapp://path/ and your app ID in app Store is 12345678.
+
+JavaScript solution
+Similar to Android, there is also a JavaScript trick for iOS:
+
+html <script>
+
+window.location.replace("yourapp://path/"); setTimeout(function () {
+
+window.location.replace("https://itunes.apple.com/app/id12345678"); }, 2000);
+
+</script>
+
+if the app is installed, the first relocation code will open the app and the following script won’t run.
+if the app is not installed, the first relocation code will do nothing and the timeout function will redirect to App Store.
+But as we discovered, this script works well in iOS 8 or below with Safari but doesn’t always work with other versions. Here is the table:
+
+Browser	JavaScript
+iOS 8 or below Safari	√
+iOS Chrome	√
+iOS 8 Facebook in-app Browser	√*
+iOS 8 Twitter in-app Browser	
+iOS 9 or above	
+* partially working depends on Facebook app version
+
+Universal link solution
+Starting with iOS 9, Apple published the universal link, which works similar to Android’s Intent but requires more setup. And moreover, since iOS 9.2, the JavaScript solution stopped working since Apple made the prompt window non-modal.
+
+In order to enable universal links, you need to have a SSL certificated domain (https://yourdomain.com/, for example) associated with your app, and to serve a special JSON file under https://yourdomain.com/apple-app-site-association similar to:
+
+This file tells your device which path serves as deep link for which app.
+
+Then, in XCode you need to enter applinks:yourdomain.com in your com.apple.developer.associated-domains entitlement:
+
+One domain can be associated with multiple apps and vice versa.
+
+Next, you need to adopt the UIApplicationDelegate methods for Handoff (specifically application:continueUserActivity:restorationHandler:) so that your app can receive a link and handle it appropriately.
+
+Let’s assume you associate https://yourdomain.com/dress/ with your app by setting "paths":[ "/dress/"] in the JSON file. When user clicks the link https://yourdomain.com/dress/1 in Safari,
+
+if the app is installed, your app will be opened and https://yourdomain.com/dress/1 will be passed to UIApplicationDelegate. You can handle it there to decide which View to open.
+if the app is not installed,https://yourdomain.com/dress/1 will be opened with Safari and you can still display the product on your website or redirect the user to App Store
+Universal links sound like a perfect solution for iOS. But again, unfortunately, they have their limitations.
+
+Universal links only work with Safari and Chrome
+When another site redirects with a universal link, it works only if the click happens within Safari and Chrome. For instance, if there is a link in your Email app https://anotherDomain.com/ redirecting to the universal link https://yourDomain.com/dress/1, it won’t deeplink into your App. But if the link https://anotherDomain.com is clicked from Safari, it works.
+Universal links won’t work if you paste the link directly into address bar.
+Universal links won’t work if the redirect is triggered by JavaScript.
+Universal links won’t work when you open the link programmatically inside your app (with openUrl, for instance)
+Welcome to the world of deep links!
+Mobile app deep linking is complicated — there is no silver bullet that works in all scenarios. Fortunately, Adjust will detect the key scenarios and use the best strategy to make deep linking functional.
+
+We have lots more deep link content for you to catch up on. First, be sure to read our deep link guide. It gives a deep dive into exactly how they work, and what makes Adjust’s deep links different. We also have several blog posts, such as this key guide to the differences of Universal Linking, and a general overview of the benefits too. You may be interested in reading our documentation, and you can also read up on how to easily implement universal links with Adjust.
+
+We’re also ready to hear your questions and concerns via our support page.
+
+
+Want to get the latest from Adjust?
+Subscribe to our newsletter below to receive updates from us as they happen
+
+
+Keep reading
+
+BLOG
+
+How deep linking works: 5 key benefits and best practices for optimal results
+How can mobile marketers get deep links right? And what things should apps avoid doing, and what do they need to be wary of? There are many ways to do deep links well, and many ways to abuse them - so...
+
+
+BLOG
+
+Unbeatable conversions, and six other ways deep links improve user experience
+To add to our deep link guide, we have a little more you should know about. Improve your user experience with our tips.
+
+Quick Links
+Request a demo
+Adjust Help Center
+Contact Us
+Pricing
+Blog
+Product
+Attribution
+Analytics
+Automate
+CTV AdVision
+iOS Solutions
+Audience Builder
+Fraud Prevention
+Unbotify
+iOS 14 Resources
+Resources
+Webinars
+Ebooks
+Success Stories
+Events
+Glossary
+Partner Benchmarks
+Company
+About Us
+Careers
+Newsroom
+Security
+Partners
+Languages: 
+English
+© 2022 Adjust GmbH. All rights reserved
+
+Data Preferences
+ 
+Legal Notice
+Privacy Policy
+CCPA
+GDPR
+Terms
+Forget Device
+Service Status
